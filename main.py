@@ -9,7 +9,7 @@ HOSTNAME = os.environ.get("HOSTNAME")
 
 async def hello(request):
     timestamp = datetime.now().isoformat()
-    return web.Response(text=f"{HOSTNAME} received: {timestamp}")
+    return web.Response(text=f"{HOSTNAME} received at {timestamp}")
 
 
 def main():
