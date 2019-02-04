@@ -1,11 +1,15 @@
+import os
 from datetime import datetime
 
 from aiohttp import web
 
 
+HOSTNAME = os.environ.get("HOSTNAME")
+
+
 async def hello(request):
     timestamp = datetime.now().isoformat()
-    return web.Response(text=f"Received: {timestamp}")
+    return web.Response(text=f"{HOSTNAME} received: {timestamp}")
 
 
 def main():
@@ -16,3 +20,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
