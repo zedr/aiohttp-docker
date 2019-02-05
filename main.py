@@ -1,10 +1,21 @@
 import os
+import sys
+import signal
+import asyncio
+import logging
 from datetime import datetime
+from concurrent.futures import CancelledError
 
 from aiohttp import web
 
 
 HOSTNAME = os.environ.get("HOSTNAME")
+
+
+def handle_sighup():
+    logging.warn("Received SIGHUP")
+    for task in asyncio.Task.all_tasks():
+        task.cancel()
 
 
 async def hello(request):
@@ -13,9 +24,14 @@ async def hello(request):
 
 
 def main():
-    web_app = web.Application()
+    loop = asyncio.get_event_loop()
+    loop.add_signal_handler(signal.SIGHUP, handle_sighup)
+    web_app = web.Application(loop=loop)
     web_app.router.add_get("/", hello)
-    web.run_app(web_app)
+    try:
+        web.run_app(web_app)
+    except CancelledError:
+        loop.close()
 
 
 if __name__ == "__main__":
