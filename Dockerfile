@@ -11,4 +11,4 @@ RUN pip3.7 install .
 
 EXPOSE 8080
 
-CMD aio-demo-serve
+ENTRYPOINT ["aio-demo-serve"]

@@ -23,11 +23,16 @@ async def hello(request):
     return web.Response(text=f"{HOSTNAME} received at {timestamp}")
 
 
+async def health(request):
+    return web.Response(text="HEALTHY")
+
+
 def main():
     loop = asyncio.get_event_loop()
     loop.add_signal_handler(signal.SIGHUP, handle_sighup)
     web_app = web.Application(loop=loop)
     web_app.router.add_get("/", hello)
+    web_app.router.add_get("/health", health)
     try:
         web.run_app(web_app)
     except CancelledError:
