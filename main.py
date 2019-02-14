@@ -10,10 +10,17 @@ from aiohttp import web
 
 
 HOSTNAME = os.environ.get("HOSTNAME")
+DEFAULT_LOGFILEPATH = "/var/log/aiohttp-demo.log"
+LOGFILEPATH = os.environ.get("LOGFILEPATH", DEFAULT_LOGFILEPATH)
+
+logger = logging.getLogger(__name__)
+_fh = logging.FileHandler(LOGFILEPATH)
+_fh.setLevel(logging.DEBUG)
+logger.addHandler(_fh)
 
 
 def handle_sighup():
-    logging.warn("Received SIGHUP")
+    logger.warn("Received SIGHUP")
     for task in asyncio.Task.all_tasks():
         task.cancel()
 
