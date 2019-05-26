@@ -1,4 +1,8 @@
 .env
+build
+dist
 *.build
 *.dist
 *.exe
+__pycache__
+*.egg-info

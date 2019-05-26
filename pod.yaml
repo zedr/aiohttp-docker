@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: aiohttp-demo
+spec:
+    containers:
+        - image: localhost:5000/aiohttp
+          name: aiohttp-demo
+          livenessProbe:
+              httpGet:
+                  path: /health
+                  port: 8080

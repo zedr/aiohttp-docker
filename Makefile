@@ -1,10 +1,11 @@
-.PHONY: deps install clean tests dist
+.PHONY: deps install clean build_clean dist_clean tests dist docker
 
 ENV=.env
 PYTHON_VERSION=3
 PYTHON=python${PYTHON_VERSION}
 SITE_PACKAGES=${ENV}/lib/${PYTHON}/site-packages
 IN_ENV=. ${ENV}/bin/activate;
+PACKAGE_VERSION=$(shell cat VERSION)
 
 default: ${ENV} deps
 
@@ -33,5 +34,14 @@ wheel: ${ENV}
 
 dist: wheel
 
-clean:
+dist_clean:
+	@rm -rf dist
+
+build_clean:
+	@rm -rf build
+
+clean: build_clean dist_clean
 	@rm -rf ${ENV} dist build __pycache__ *.egg-info
+
+docker: build_clean dist_clean wheel
+	@docker build -t aio-demo/${PACKAGE_VERSION} .
