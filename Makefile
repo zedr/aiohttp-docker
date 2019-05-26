@@ -44,5 +44,5 @@ clean: build_clean dist_clean
 	@rm -rf ${ENV} dist build __pycache__ *.egg-info
 
 docker: build_clean dist_clean wheel
-	@docker build -t aiohttp-demo/${PACKAGE_VERSION} .
-	@docker tag aiohttp-demo/${PACKAGE_VERSION} aiohttp-demo:latest
+	@docker build -t aiohttp-demo:${PACKAGE_VERSION} .
+	@docker tag aiohttp-demo:${PACKAGE_VERSION} aiohttp-demo:latest
