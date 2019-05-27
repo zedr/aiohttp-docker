@@ -1,17 +1,16 @@
-# aiohttp container + binary
+# An example aiohttp microservice for Kubernetes
 
-This project provides a template to build a Docker container that runs
-a simple aiohttp web application compiled as a binary using Nuitka. Now, that's
-a mouthful...
+This project demonstrates a simple microservice application based on aiohttp
+and designed to be deployed on Kubernetes/OpenShift.
 
 ## Instructions
 
 ```bash
-# Create the Nuitka binary
-make binary
-# Create the Docker container
-docker build --rm -t aio-demo .
-# Run the container
-docker run -t aio-demo
+# Create the Docker image
+make docker
+# Run the tests
+docker run -t aiohttp-demo aio-demo-test
+# Run the application locally
+docker run -t aiohttp-demo
 # Now open a browser and visit http://localhost:8080
 ```
