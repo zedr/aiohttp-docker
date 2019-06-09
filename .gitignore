@@ -5,4 +5,5 @@ dist
 *.dist
 *.exe
 __pycache__
+.mypy_cache
 *.egg-info
